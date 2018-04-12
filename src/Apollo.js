@@ -45,11 +45,11 @@ const ExchangeRates = () => (
       if (loading) return <p>Loading...</p>;
       if (error) return <p>Error : {error.message}</p>;
 
-      return data.rates.map(({ currency, rate }) => (
-        <div key={currency}>
-          <p>{`${currency}: ${rate}`}</p>
-        </div>
-      ));
+      return ( <ul className='item-list'>{
+        data.rates.map(({ currency, rate }) => (
+          <li key={currency}>{`${currency}: ${rate}`}</li>
+        ))
+      }</ul> )
     }}
   </Query>
 );
