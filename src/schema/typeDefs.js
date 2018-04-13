@@ -1,11 +1,38 @@
 export const typeDefs = `
-  type Channel = {
-    id: ID!   # !: 必填
-    name: String
+  type Author {
+    id: Int! # the ! means that every author object _must_ have an id
+    firstName: String
+    lastName: String
+    """
+    the list of Posts by this author
+    """
+    posts: [Post]
   }
 
-  # 此类型指定了我们的 API 的入口点。在本例中，只有一个 channels 返回列表。
-  type Query = {
-    channels: [Channel]
+  type Post {
+    id: Int!
+    title: String
+    author: Author
+    votes: Int
+  }
+
+  # the schema allows the following query:
+  type Query {
+    posts: [Post]
+    author(id: Int!): Author
+  }
+
+  # this schema allows the following mutation:
+  type Mutation {
+    upvotePost (
+      postId: Int!
+    ): Post
+  }
+
+  # we need to tell the server which types represent the root query
+  # and root mutation types. We call them RootQuery and RootMutation by convention.
+  schema {
+    query: Query
+    mutation: Mutation
   }
 `;
